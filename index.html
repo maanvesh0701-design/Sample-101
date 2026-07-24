@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- sets character encoding for the page -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- makes the page responsive on mobile devices -->
+
+    <title>- page title will be placed here -</title>
+    <!-- title shown on the browser tab -->
+
+    <style>
+        /* ---------- basic reset ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* removes default spacing and makes sizing predictable */
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            /* default font for the whole page */
+            line-height: 1.6;
+            /* spacing between lines of text */
+            color: #333;
+            /* default text color */
+        }
+
+        /* ---------- header section ---------- */
+        header {
+            background-color: #222;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            /* styling for the top header bar */
+        }
+
+        header h1 {
+            font-size: 28px;
+            /* main site title size */
+        }
+
+        header p {
+            font-size: 14px;
+            color: #ccc;
+            /* subtitle under the site title */
+        }
+
+        /* ---------- navigation bar ---------- */
+        nav {
+            background-color: #444;
+            display: flex;
+            justify-content: center;
+            /* centers the nav links */
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 14px 20px;
+            display: inline-block;
+            /* clickable spacing for each link */
+        }
+
+        nav a:hover {
+            background-color: #666;
+            /* hover effect for nav links */
+        }
+
+        /* ---------- main content layout ---------- */
+        .container {
+            display: flex;
+            max-width: 1000px;
+            margin: 20px auto;
+            gap: 20px;
+            /* arranges blog posts and sidebar side by side */
+        }
+
+        /* ---------- blog posts section ---------- */
+        .blog-posts {
+            flex: 3;
+            /* takes up more space than the sidebar */
+        }
+
+        .post {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            /* card style for each blog post */
+        }
+
+        .post h2 {
+            margin-bottom: 10px;
+            /* spacing under each post title */
+        }
+
+        .post .meta {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 10px;
+            /* small text for date/author info */
+        }
+
+        .post img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            /* makes post images responsive */
+        }
+
+        .post a.read-more {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007BFF;
+            text-decoration: none;
+            /* link to read the full post */
+        }
+
+        /* ---------- sidebar section ---------- */
+        .sidebar {
+            flex: 1;
+            background: #f1f1f1;
+            padding: 15px;
+            border-radius: 6px;
+            height: fit-content;
+            /* sits beside the blog posts */
+        }
+
+        .sidebar h3 {
+            margin-bottom: 10px;
+            /* heading for sidebar widgets */
+        }
+
+        .sidebar ul {
+            list-style: none;
+            /* removes default bullet points */
+        }
+
+        .sidebar ul li {
+            margin-bottom: 8px;
+            /* spacing between sidebar list items */
+        }
+
+        /* ---------- footer section ---------- */
+        footer {
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+            /* styling for the bottom footer bar */
+        }
+
+        /* ---------- responsive layout for small screens ---------- */
+        @media (max-width: 700px) {
+            .container {
+                flex-direction: column;
+                /* stacks sidebar below posts on mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header>
+        <h1>- site heading/logo will be placed here -</h1>
+        <p>- site tagline/subtitle will be placed here -</p>
+    </header>
+
+    <!-- ================= NAVIGATION ================= -->
+    <nav>
+        <a href="#">- nav link 1 -</a>
+        <a href="#">- nav link 2 -</a>
+        <a href="#">- nav link 3 -</a>
+        <a href="#">- nav link 4 -</a>
+        <!-- add or remove <a> tags for more/less nav links -->
+    </nav>
+
+    <!-- ================= MAIN CONTAINER ================= -->
+    <div class="container">
+
+        <!-- ---------- blog posts list ---------- -->
+        <section class="blog-posts">
+
+            <!-- ----- single blog post block ----- -->
+            <article class="post">
+                <img src="" alt="- post image will be placed here -">
+                <!-- image for the blog post -->
+
+                <h2>- post title will be placed here -</h2>
+                <!-- title of the blog post -->
+
+                <p class="meta">- author name and date will be placed here -</p>
+                <!-- meta info like author/date -->
+
+                <p>- post short description/excerpt will be placed here -</p>
+                <!-- short preview text of the post -->
+
+                <a href="#" class="read-more">- "read more" link will be placed here -</a>
+                <!-- link to full article -->
+            </article>
+
+            <!-- ----- repeat the above article block for more posts ----- -->
+            <article class="post">
+                <img src="" alt="- post image will be placed here -">
+                <h2>- post title will be placed here -</h2>
+                <p class="meta">- author name and date will be placed here -</p>
+                <p>- post short description/excerpt will be placed here -</p>
+                <a href="#" class="read-more">- "read more" link will be placed here -</a>
+            </article>
+
+        </section>
+
+        <!-- ---------- sidebar ---------- -->
+        <aside class="sidebar">
+
+            <h3>- sidebar heading will be placed here -</h3>
+            <!-- e.g. "About" / "Categories" / "Recent Posts" -->
+
+            <ul>
+                <li>- sidebar list item 1 -</li>
+                <li>- sidebar list item 2 -</li>
+                <li>- sidebar list item 3 -</li>
+                <!-- add or remove <li> for more/less items -->
+            </ul>
+
+        </aside>
+
+    </div>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+        <p>- footer text/copyright will be placed here -</p>
+    </footer>
+
+</body>
+</html>
+
