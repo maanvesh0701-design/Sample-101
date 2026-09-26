@@ -1,244 +1,391 @@
-<!DOCTYPE html>
+html = r'''<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <!-- sets character encoding for the page -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Shubhrali — A Pure, Radiant Friend</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- makes the page responsive on mobile devices -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
-    <title>- page title will be placed here -</title>
-    <!-- title shown on the browser tab -->
+<style>
+  :root {
+    --bg-dark: #0a0f13;
+    --text-pure: #f4f6f7;
+    --text-soft: #c7d2d8;
+    --text-muted: #7d8b93;
+    --accent-blue: #6fb3d1;
+    --accent-gold: #c9a668;
+    --line: rgba(255,255,255,0.16);
+    box-sizing: border-box;
+  }
 
-    <style>
-        /* ---------- basic reset ---------- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            /* removes default spacing and makes sizing predictable */
-        }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 
-        body {
-            font-family: Arial, sans-serif;
-            /* default font for the whole page */
-            line-height: 1.6;
-            /* spacing between lines of text */
-            color: #333;
-            /* default text color */
-        }
+  body, html {
+    width: 100%; height: 100%; overflow: hidden;
+    background: var(--bg-dark); color: var(--text-pure);
+    font-family: 'Inter', sans-serif;
+  }
 
-        /* ---------- header section ---------- */
-        header {
-            background-color: #222;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-            /* styling for the top header bar */
-        }
+  nav {
+    position: fixed; top: 0; width: 100%;
+    padding: 1.5rem 3.5rem;
+    padding-top: calc(1.5rem + env(safe-area-inset-top, 0px));
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 100;
+    background: linear-gradient(to bottom, rgba(6,10,13,0.85), transparent);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
 
-        header h1 {
-            font-size: 28px;
-            /* main site title size */
-        }
+  .nav-brand { display: flex; align-items: center; gap: 12px; font-family: 'Cinzel', serif;
+    font-size: 1.05rem; letter-spacing: 0.14em; font-weight: 700; color: var(--text-pure);
+    text-decoration: none; }
+  .nav-brand img { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; background: #f4f0e6; }
+  .slide-indicator { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--accent-gold); letter-spacing: 0.08em; }
 
-        header p {
-            font-size: 14px;
-            color: #ccc;
-            /* subtitle under the site title */
-        }
+  .progress-container { position: fixed; bottom: calc(34px + env(safe-area-inset-bottom, 0px));
+    left: 7vw; right: 7vw; height: 2px; background: rgba(255,255,255,0.15); z-index: 100; }
+  .progress-bar { height: 100%; width: 10%; background: var(--accent-gold); transition: width 0.3s ease; }
 
-        /* ---------- navigation bar ---------- */
-        nav {
-            background-color: #444;
-            display: flex;
-            justify-content: center;
-            /* centers the nav links */
-        }
+  .viewport-slider { display: flex; width: 100vw; height: 100%; overflow-x: auto; overflow-y: hidden;
+    scroll-snap-type: x mandatory; scroll-behavior: smooth; }
+  .viewport-slider::-webkit-scrollbar { display: none; }
+  .viewport-slider { -ms-overflow-style: none; scrollbar-width: none; }
 
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            padding: 14px 20px;
-            display: inline-block;
-            /* clickable spacing for each link */
-        }
+  .slide { flex: 0 0 100vw; height: 100%; scroll-snap-align: start; position: relative;
+    display: flex; align-items: center; padding: 0 7vw; background-size: cover; background-position: center; }
 
-        nav a:hover {
-            background-color: #666;
-            /* hover effect for nav links */
-        }
+  .slide::before { content: ''; position: absolute; inset: 0;
+    background: linear-gradient(100deg, rgba(6,10,13,0.94) 0%, rgba(6,10,13,0.82) 38%, rgba(6,10,13,0.35) 68%, rgba(6,10,13,0.15) 100%);
+    z-index: 1; }
 
-        /* ---------- main content layout ---------- */
-        .container {
-            display: flex;
-            max-width: 1000px;
-            margin: 20px auto;
-            gap: 20px;
-            /* arranges blog posts and sidebar side by side */
-        }
+  .slide.scroll-y { overflow-y: auto; padding-top: calc(9rem + env(safe-area-inset-top,0px)); padding-bottom: 6rem; align-items: flex-start; -webkit-overflow-scrolling: touch; }
 
-        /* ---------- blog posts section ---------- */
-        .blog-posts {
-            flex: 3;
-            /* takes up more space than the sidebar */
-        }
+  .content { position: relative; z-index: 2; max-width: 640px; }
+  .content.wide { max-width: 880px; }
 
-        .post {
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            padding: 20px;
-            margin-bottom: 20px;
-            /* card style for each blog post */
-        }
+  .eyebrow { display: flex; align-items: center; gap: 10px; font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent-gold);
+    margin-bottom: 1.1rem; }
+  .eyebrow .dot { width: 5px; height: 5px; background: var(--accent-gold); }
 
-        .post h2 {
-            margin-bottom: 10px;
-            /* spacing under each post title */
-        }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 4.6vw, 4.6rem);
+    line-height: 1.08; margin-bottom: 1.3rem; font-weight: 400; }
 
-        .post .meta {
-            font-size: 13px;
-            color: #888;
-            margin-bottom: 10px;
-            /* small text for date/author info */
-        }
+  p.lead { font-size: 1.08rem; line-height: 1.68; color: var(--text-soft); margin-bottom: 1.2rem; }
+  p.lead.small { font-size: 0.92rem; color: var(--text-muted); }
 
-        .post img {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-            margin-bottom: 10px;
-            /* makes post images responsive */
-        }
+  .deep-link { display: inline-flex; align-items: center; gap: 8px; color: var(--accent-blue);
+    text-decoration: none; font-size: 0.92rem; font-weight: 500; border-bottom: 1px solid var(--accent-blue);
+    padding-bottom: 3px; }
+  .deep-link:hover { color: var(--text-pure); border-color: var(--text-pure); }
 
-        .post a.read-more {
-            display: inline-block;
-            margin-top: 10px;
-            color: #007BFF;
-            text-decoration: none;
-            /* link to read the full post */
-        }
+  .punch-screen h1 { font-family: 'Inter', sans-serif; font-weight: 700; font-size: clamp(2.6rem, 7vw, 6.8rem);
+    letter-spacing: -0.02em; line-height: 0.98; text-transform: uppercase; color: var(--text-pure); }
 
-        /* ---------- sidebar section ---------- */
-        .sidebar {
-            flex: 1;
-            background: #f1f1f1;
-            padding: 15px;
-            border-radius: 6px;
-            height: fit-content;
-            /* sits beside the blog posts */
-        }
+  .stat-row { display: flex; flex-wrap: wrap; gap: 0; margin-top: 1.6rem; border-top: 1px solid var(--line); }
+  .stat { flex: 1; min-width: 140px; padding: 14px 20px 14px 0; border-right: 1px solid var(--line); }
+  .stat:last-child { border-right: none; }
+  .stat .num { font-family: 'JetBrains Mono', monospace; font-size: 1.15rem; color: var(--accent-gold); display: block; margin-bottom: 3px; }
+  .stat .lbl { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.03em; }
 
-        .sidebar h3 {
-            margin-bottom: 10px;
-            /* heading for sidebar widgets */
-        }
+  .spec-list { margin-top: 1.6rem; border-top: 1px solid var(--line); }
+  .spec-row { display: flex; gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+  .spec-row .idx { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--accent-gold); flex: 0 0 28px; }
+  .spec-row .body h4 { font-size: 1rem; color: var(--text-pure); margin-bottom: 4px; font-weight: 600; }
+  .spec-row .body .tag { font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; color: var(--accent-blue); display: block; margin-bottom: 6px; }
+  .spec-row .body p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; }
 
-        .sidebar ul {
-            list-style: none;
-            /* removes default bullet points */
-        }
+  .roadmap { margin-top: 1.6rem; border-top: 1px solid var(--line); }
+  .rm-row { display: flex; gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .rm-row .phase { flex: 0 0 90px; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+    color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.08em; padding-top: 2px; }
+  .rm-row .desc h4 { font-size: 0.98rem; margin-bottom: 3px; color: var(--text-pure); font-weight: 600; }
+  .rm-row .desc p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; }
 
-        .sidebar ul li {
-            margin-bottom: 8px;
-            /* spacing between sidebar list items */
-        }
+  .founder-layout { display: flex; gap: 36px; align-items: flex-start; margin-top: 1.3rem;
+    padding-top: 1.6rem; border-top: 1px solid var(--line); }
+  .trust-logo { width: 110px; height: 110px; object-fit: cover; flex-shrink: 0; background: #fff;
+    border: 1px solid var(--line); }
+  .founder-text h3 { font-size: 1.35rem; margin-bottom: 3px; }
+  .founder-text .meta { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--accent-blue);
+    margin-bottom: 14px; display: block; }
+  .founder-text p { font-size: 0.92rem; color: var(--text-soft); line-height: 1.6; margin-bottom: 10px; }
 
-        /* ---------- footer section ---------- */
-        footer {
-            background-color: #222;
-            color: #fff;
-            text-align: center;
-            padding: 15px;
-            margin-top: 20px;
-            /* styling for the bottom footer bar */
-        }
+  .dl-list { margin-top: 1.6rem; border-top: 1px solid var(--line); }
+  .dl-row { display: flex; justify-content: space-between; align-items: center; gap: 20px;
+    padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .dl-row .dl-name { font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: var(--text-pure); display: block; margin-bottom: 4px; }
+  .dl-row .dl-meta { font-size: 0.85rem; color: var(--text-muted); }
+  .dl-row .dl-status { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted);
+    border: 1px solid var(--line); padding: 6px 12px; white-space: nowrap; }
 
-        /* ---------- responsive layout for small screens ---------- */
-        @media (max-width: 700px) {
-            .container {
-                flex-direction: column;
-                /* stacks sidebar below posts on mobile */
-            }
-        }
-    </style>
+  /* Stacked definition blocks — forked vs wrapped, one below the other */
+  .stack-list { margin-top: 1.4rem; border-top: 1px solid var(--line); }
+  .stack-block { padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .stack-block h4 { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--accent-gold); margin-bottom: 8px; }
+  .stack-block p { font-size: 0.92rem; color: var(--text-soft); line-height: 1.6; }
+  .verdict { font-size: 1rem; color: var(--text-pure); font-weight: 600; margin-top: 1.1rem; }
+
+  /* Numbered install steps */
+  .step-list { margin-top: 1.5rem; border-top: 1px solid var(--line); counter-reset: step; }
+  .step-row { display: flex; gap: 18px; padding: 13px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+  .step-row .idx { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--accent-gold); flex: 0 0 24px; }
+  .step-row p { font-size: 0.94rem; color: var(--text-soft); line-height: 1.5; }
+  .step-row p strong { color: var(--text-pure); }
+
+  .faq-block { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+  .faq-block h4 { font-size: 1.05rem; margin-bottom: 10px; color: var(--text-pure); }
+  .faq-block p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 10px; }
+
+  #slide-1 { background-image: url('__IMG_84653__'); }
+  #slide-2 { background-image: url('__IMG_84659__'); }
+  #slide-3 { background-image: url('__IMG_84652__'); }
+  #slide-4 { background-image: url('__IMG_84665__'); }
+  #slide-5 { background-image: url('__IMG_84661__'); }
+  #slide-6 { background-image: url('__IMG_84657__'); }
+  #slide-7 { background-image: url('__IMG_84655__'); }
+  #slide-8 { background-image: url('__IMG_84653__'); }
+  #slide-9 { background-image: url('__IMG_84659__'); }
+  #slide-10 { background-image: url('__IMG_84663__'); }
+
+  @media (max-width: 900px) {
+    .founder-layout { flex-direction: column; align-items: flex-start; }
+    .stat-row { flex-direction: column; }
+    .stat { border-right: none; border-bottom: 1px solid var(--line); }
+  }
+  @media (max-width: 640px) {
+    nav { padding: 1.1rem 1.5rem; padding-top: calc(1.1rem + env(safe-area-inset-top, 0px)); }
+    .slide { padding: 0 6vw; }
+    .slide.scroll-y { padding-top: calc(7.5rem + env(safe-area-inset-top,0px)); }
+    h1 { font-size: clamp(1.9rem, 8vw, 2.8rem); }
+    .progress-container { left: 6vw; right: 6vw; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
+  }
+</style>
 </head>
 <body>
 
-    <!-- ================= HEADER ================= -->
-    <header>
-        <h1>- site heading/logo will be placed here -</h1>
-        <p>- site tagline/subtitle will be placed here -</p>
-    </header>
+<nav>
+  <a href="#slide-1" class="nav-brand">
+    <img src="__IMG_68840__" alt="Shubhrali Emblem">
+    SHUBHRALI
+  </a>
+  <span class="slide-indicator" id="slideIndicator">01 / 10</span>
+</nav>
 
-    <!-- ================= NAVIGATION ================= -->
-    <nav>
-        <a href="#">- nav link 1 -</a>
-        <a href="#">- nav link 2 -</a>
-        <a href="#">- nav link 3 -</a>
-        <a href="#">- nav link 4 -</a>
-        <!-- add or remove <a> tags for more/less nav links -->
-    </nav>
+<div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
 
-    <!-- ================= MAIN CONTAINER ================= -->
-    <div class="container">
+<div class="viewport-slider" id="slider">
 
-        <!-- ---------- blog posts list ---------- -->
-        <section class="blog-posts">
-
-            <!-- ----- single blog post block ----- -->
-            <article class="post">
-                <img src="" alt="- post image will be placed here -">
-                <!-- image for the blog post -->
-
-                <h2>- post title will be placed here -</h2>
-                <!-- title of the blog post -->
-
-                <p class="meta">- author name and date will be placed here -</p>
-                <!-- meta info like author/date -->
-
-                <p>- post short description/excerpt will be placed here -</p>
-                <!-- short preview text of the post -->
-
-                <a href="#" class="read-more">- "read more" link will be placed here -</a>
-                <!-- link to full article -->
-            </article>
-
-            <!-- ----- repeat the above article block for more posts ----- -->
-            <article class="post">
-                <img src="" alt="- post image will be placed here -">
-                <h2>- post title will be placed here -</h2>
-                <p class="meta">- author name and date will be placed here -</p>
-                <p>- post short description/excerpt will be placed here -</p>
-                <a href="#" class="read-more">- "read more" link will be placed here -</a>
-            </article>
-
-        </section>
-
-        <!-- ---------- sidebar ---------- -->
-        <aside class="sidebar">
-
-            <h3>- sidebar heading will be placed here -</h3>
-            <!-- e.g. "About" / "Categories" / "Recent Posts" -->
-
-            <ul>
-                <li>- sidebar list item 1 -</li>
-                <li>- sidebar list item 2 -</li>
-                <li>- sidebar list item 3 -</li>
-                <!-- add or remove <li> for more/less items -->
-            </ul>
-
-        </aside>
-
+  <section class="slide" id="slide-1">
+    <div class="content">
+      <div class="eyebrow"><span class="dot"></span>Genesis</div>
+      <span style="font-family:'Cinzel',serif;color:var(--accent-blue);font-size:1.1rem;display:block;margin-bottom:10px;">"शुभ्रली"</span>
+      <h1>A pure, radiant friend.</h1>
+      <p class="lead">Derived from Sanskrit, Shubhrali embodies the archetype of genuine, untainted companionship — an on-device entity engineered to listen without judgment, and without a connection to anywhere else.</p>
+      <p class="lead small">No account. No server round-trip. The conversation stays on the phone it started on.</p>
+      <a href="https://en.wiktionary.org/wiki/Special:Search?search=shubhra+sanskrit" target="_blank" rel="noopener" class="deep-link">Explore the linguistic root &rarr;</a>
     </div>
+  </section>
 
-    <!-- ================= FOOTER ================= -->
-    <footer>
-        <p>- footer text/copyright will be placed here -</p>
-    </footer>
+  <section class="slide" id="slide-2">
+    <div class="content punch-screen">
+      <div class="eyebrow"><span class="dot"></span>Zero Cloud Overhead</div>
+      <h1>JUST<br>CLOCK IT</h1>
+      <p class="lead" style="max-width:480px;margin-top:0.8rem;">No queue. No token throttle. No handshake to a data center. Execution runs directly on the phone's own silicon.</p>
+      <div class="stat-row">
+        <div class="stat"><span class="num">0</span><span class="lbl">servers contacted</span></div>
+        <div class="stat"><span class="num">~1.2GB</span><span class="lbl">peak device RAM</span></div>
+        <div class="stat"><span class="num">100%</span><span class="lbl">of inference on-device</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-3">
+    <div class="content">
+      <div class="eyebrow"><span class="dot"></span>The Model & System</div>
+      <h1>Engineered on Qwen 2.5 1.5B</h1>
+      <p class="lead">A local, customised Qwen 2.5 1.5B architecture. Inference, token processing, and model weights stay inside the device's own memory — nothing is streamed out for a response.</p>
+      <div class="spec-list">
+        <div class="spec-row"><span class="idx">01</span><div class="body"><h4>Base model</h4><span class="tag">Qwen 2.5 · 1.5B parameters</span><p>Quantized to Q4_K_M (GGUF) for mobile neural processing engines.</p></div></div>
+        <div class="spec-row"><span class="idx">02</span><div class="body"><h4>Tuning focus</h4><span class="tag">Human-grounded fine-tune</span><p>Trained for empathetic cadence, active listening, and peer-level conversational depth over task-completion.</p></div></div>
+        <div class="spec-row"><span class="idx">03</span><div class="body"><h4>Data path</h4><span class="tag">Fully offline</span><p>No network packets leave the device during a dialogue; nothing is logged to a remote server.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-4">
+    <div class="content wide">
+      <div class="eyebrow"><span class="dot"></span>Competitive Analysis</div>
+      <h1>The $28B+ Landscape</h1>
+      <p class="lead" style="margin-bottom:0;">Over 57% of Indian youth turn to AI for emotional support. Most of the existing players remain tethered to cloud infrastructure and data collection.</p>
+      <div class="spec-list">
+        <div class="spec-row"><span class="idx">01</span><div class="body"><h4>Character.AI</h4><span class="tag">~$1B valuation</span><p>Cloud-based persona roleplay; heavy inference costs and long-term storage of conversation logs.</p></div></div>
+        <div class="spec-row"><span class="idx">02</span><div class="body"><h4>Replika</h4><span class="tag">$14–30M ARR</span><p>Persistent digital avatars on centralized cloud storage with recurring subscription pricing.</p></div></div>
+        <div class="spec-row"><span class="idx">03</span><div class="body"><h4>Wysa</h4><span class="tag">~$82M valuation</span><p>Indian-founded CBT triage platform, $30.5M raised; server-reliant and clinical in structure.</p></div></div>
+        <div class="spec-row"><span class="idx">04</span><div class="body"><h4>General LLMs</h4><span class="tag">ChatGPT & generic APIs</span><p>Built for task completion, not companionship — and retain telemetry for retraining.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-5">
+    <div class="content">
+      <div class="eyebrow"><span class="dot"></span>Capabilities</div>
+      <h1>The Empathetic Anchor</h1>
+      <p class="lead">Not a replacement for human relationships — a secure space to unpack your mind before stepping back into reality.</p>
+      <div class="spec-list">
+        <div class="spec-row"><span class="idx">01</span><div class="body"><h4>Unfiltered safe harbor</h4><p>Say what you actually feel, without your words being logged or sold to an ad network.</p></div></div>
+        <div class="spec-row"><span class="idx">02</span><div class="body"><h4>Civic super-app bridge</h4><p>Connects users to public health resources and offline community assistance.</p></div></div>
+        <div class="spec-row"><span class="idx">03</span><div class="body"><h4>Hindi–English code-switch</h4><p>Built to follow the way people in India actually talk, mid-sentence language switches included.</p></div></div>
+        <div class="spec-row"><span class="idx">04</span><div class="body"><h4>No account required</h4><p>Nothing to sign up for and nothing tied to a phone number or email.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-6">
+    <div class="content">
+      <div class="eyebrow"><span class="dot"></span>Core Thesis</div>
+      <h1>The Case for Small Models</h1>
+      <p class="lead"><em>"We do not need massive, energy-draining data centers for our everyday thoughts and emotional grounding."</em></p>
+      <p class="lead small">The Shubhrali MVP is the proof: a fine-tuned, localized small language model running directly on phone silicon can deliver genuine empathy and utility — without asking anyone to trade privacy for it.</p>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-7">
+    <div class="content">
+      <div class="eyebrow"><span class="dot"></span>Where This Is Going</div>
+      <h1>Roadmap</h1>
+      <div class="roadmap">
+        <div class="rm-row"><span class="phase">Now</span><div class="desc"><h4>MVP on Android</h4><p>Offline Qwen 2.5 1.5B build, companion-mode conversation, local-only storage.</p></div></div>
+        <div class="rm-row"><span class="phase">Next</span><div class="desc"><h4>Civic utility layer</h4><p>Offline directories for public health and community resources, reachable without signal.</p></div></div>
+        <div class="rm-row"><span class="phase">Later</span><div class="desc"><h4>Wider device support</h4><p>Lower-RAM device targets and additional Indian-language fine-tunes.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-8">
+    <div class="content wide">
+      <div class="eyebrow"><span class="dot"></span>Origins & Organization</div>
+      <h1>Founder & Incubation</h1>
+      <div class="founder-layout">
+        <img src="__IMG_74472__" alt="Proton India Trust Logo" class="trust-logo">
+        <div class="founder-text">
+          <h3>Maanvesh Singh</h3>
+          <span class="meta">Founder · Lucknow, Uttar Pradesh, India</span>
+          <p>Maanvesh conceived Shubhrali after confronting the lack of digital privacy in mainstream AI tools, alongside a wider gap in public understanding of how those tools actually work.</p>
+          <p>Standard AI assistants are largely black boxes that harvest user data by default. Shubhrali was built as a transparent, on-device alternative — one that doesn't ask for personal data as the price of using it.</p>
+          <p>Shubhrali is incubated by <strong>Proton India Trust</strong>, a trust registered under India's Trusts Act, and is developed in line with the Trust's broader mission of driving scientific innovation and empowering Indian youth.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide scroll-y" id="slide-9">
+    <div class="content wide">
+      <div class="eyebrow"><span class="dot"></span>Under the Hood</div>
+      <h1>What to Expect in the MVP</h1>
+      <p class="lead">The Shubhrali MVP is a fork of <strong>PocketPal AI</strong> — an open-source, MIT-licensed app that runs language models entirely on-device. Shubhrali is that codebase, forked and rebranded, with its own persona built on top of it. It is not a wrapper around someone else's app; it is the app itself, modified and maintained as its own project.</p>
+
+      <div class="stack-list">
+        <div class="stack-block">
+          <h4>Forked</h4>
+          <p>A fork means taking the actual source code of an existing open-source project and creating an independent copy of it. The code is inspected, modified, rebuilt, and maintained separately going forward — the fork becomes its own project, even though it shares its origins with the original.</p>
+        </div>
+        <div class="stack-block">
+          <h4>Wrapped</h4>
+          <p>A wrapper, by contrast, is a thin layer placed on top of another app or service without touching its underlying code. It typically just reskins the interface or relabels the branding, while the original software keeps running underneath, unmodified — and often still connected to its original servers.</p>
+        </div>
+      </div>
+      <p class="verdict">Shubhrali is forked, not wrapped.</p>
+
+      <p class="lead" style="margin-top:1.6rem;">Qwen was chosen as the underlying model because it is open source — developed by Alibaba and released publicly under a permissive license that allows modification and commercial use. Its smaller parameter variants are purpose-built to run efficiently on limited hardware, and its training covers strong multilingual ground, Hindi included — which matters directly for an Indian audience.</p>
+      <p class="lead small">What comes next builds on this same fork: a Shubhrali-specific fine-tune layered on top of it, followed by the civic utility layer on the roadmap.</p>
+    </div>
+  </section>
+
+  <section class="slide scroll-y" id="slide-10">
+    <div class="content wide">
+      <div class="eyebrow"><span class="dot"></span>Get Started</div>
+      <h1>Run Shubhrali Locally</h1>
+      <p class="lead">Eight steps, all on your phone, no account required.</p>
+      <div class="step-list">
+        <div class="step-row"><span class="idx">01</span><p>Download the <strong>Qwen 2.5 1.5B (GGUF)</strong> model file.</p></div>
+        <div class="step-row"><span class="idx">02</span><p>Move that file into your phone's <strong>main storage</strong>.</p></div>
+        <div class="step-row"><span class="idx">03</span><p>Download the <strong>Shubhrali APK</strong> and install it.</p></div>
+        <div class="step-row"><span class="idx">04</span><p>Open the app and go to <strong>Add Models</strong>.</p></div>
+        <div class="step-row"><span class="idx">05</span><p>Choose <strong>Local Model</strong>.</p></div>
+        <div class="step-row"><span class="idx">06</span><p>Select the <strong>Qwen</strong> file that appears in the list.</p></div>
+        <div class="step-row"><span class="idx">07</span><p>Go to <strong>Pals</strong>.</p></div>
+        <div class="step-row"><span class="idx">08</span><p>Select <strong>Shubhrali</strong> — you're in.</p></div>
+      </div>
+
+      <div class="dl-list">
+        <div class="dl-row">
+          <div><span class="dl-name">app-release-apk.zip</span><span class="dl-meta">76.82 MB · native Android application shell</span></div>
+          <span class="dl-status">Link not active in preview</span>
+        </div>
+        <div class="dl-row">
+          <div><span class="dl-name">Qwen 2.5 1.5B (GGUF, Q4_K_M)</span><span class="dl-meta">1.12 GB · quantized model weights</span></div>
+          <span class="dl-status">Link not active in preview</span>
+        </div>
+      </div>
+
+      <div class="faq-block">
+        <h4>Why isn't this a polished app yet?</h4>
+        <p>Because it isn't meant to be, not yet. This is a minimum viable product — its job is to prove the core thesis, not to be a finished consumer app.</p>
+        <p>The thesis: AI works better with privacy and with real consistency than it does without either. We don't need giant cloud-hosted models for everyday use — and where bigger models genuinely are required, they should come with that same privacy, not the targeted ads and resold data that get sold to us as the only option. The idea that a phone "can't handle this" is mostly hype. Phones are built to handle exactly this.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  const slider = document.getElementById('slider');
+  const slideIndicator = document.getElementById('slideIndicator');
+  const progressBar = document.getElementById('progressBar');
+  const totalSlides = 10;
+
+  slider.addEventListener('wheel', (evt) => {
+    if (evt.deltaY !== 0) {
+      evt.preventDefault();
+      slider.scrollBy({ left: evt.deltaY > 0 ? window.innerWidth : -window.innerWidth, behavior: 'smooth' });
+    }
+  });
+
+  slider.addEventListener('scroll', () => {
+    const currentIndex = Math.round(slider.scrollLeft / window.innerWidth) + 1;
+    const padded = String(currentIndex).padStart(2, '0');
+    slideIndicator.textContent = `${padded} / ${String(totalSlides).padStart(2,'0')}`;
+    progressBar.style.width = `${(currentIndex / totalSlides) * 100}%`;
+  });
+</script>
 
 </body>
 </html>
+'''
 
+replacements = {
+    '__IMG_84653__': DATAURIS['84653.jpg'],
+    '__IMG_84659__': DATAURIS['84659.jpg'],
+    '__IMG_84652__': DATAURIS['84652.jpg'],
+    '__IMG_84665__': DATAURIS['84665.jpg'],
+    '__IMG_84661__': DATAURIS['84661.jpg'],
+    '__IMG_84657__': DATAURIS['84657.jpg'],
+    '__IMG_84655__': DATAURIS['84655.jpg'],
+    '__IMG_84663__': DATAURIS['84663.jpg'],
+    '__IMG_68840__': DATAURIS['68840.jpg'],
+    '__IMG_74472__': DATAURIS['74472.jpg'],
+}
+for k, v in replacements.items():
+    html = html.replace(k, v)
+
+with open('/mnt/user-data/outputs/shubhrali.html', 'w') as f:
+    f.write(html)
+print("bytes:", len(html.encode('utf-8')))
+PYEOF
+python3 /home/claude/build3.py
